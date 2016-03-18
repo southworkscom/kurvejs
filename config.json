@@ -10,12 +10,8 @@
   },
   "core": {
     "typescript": [
-      "./promises.ts",
-      "./KurveIdentity.ts",
-      "./KurveGraph.ts",
-	  "./promises.d.ts",
-      "./KurveIdentity.d.ts",
-      "./KurveGraph.d.ts"
+      "./src/*.ts",
+      "./src/*.d.ts"
     ]
   }
 }

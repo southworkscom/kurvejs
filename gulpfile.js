@@ -24,45 +24,47 @@ gulp.task('default', ['typescript-compile'], function () {
 
 
 gulp.task('typescript-sourcemaps',['move-html'], function () {
-    var tsResult = gulp.src(config.core.typescript) 
-                     .pipe(sourcemaps.init()) // sourcemaps init. currently redundant directory def, waiting for this - https://github.com/floridoo/gulp-sourcemaps/issues/111 
-                     .pipe(typescript({  
-                             noExternalResolve: true,  
-                             target: 'ES5',  
-                             declarationFiles: true, 
+    var tsResult = gulp.src(config.core.typescript)
+                     .pipe(sourcemaps.init()) // sourcemaps init. currently redundant directory def, waiting for this - https://github.com/floridoo/gulp-sourcemaps/issues/111
+                     .pipe(typescript({
+                             module: 'commonjs',
+                             noExternalResolve: true,
+                             target: 'ES5',
+                             declarationFiles: true,
                              typescript: require('typescript'),
-                             out: 'kurve-' + config.build.version + '.js' 
-                     })); 
-     return tsResult.js 
-             .pipe(sourcemaps.write("./")) // sourcemaps are written. 
-             .pipe(gulp.dest(config.build.srcOutputDirectory + '-' + config.build.version + '/')); 
+                             out: 'kurve-' + config.build.version + '.js'
+                     }));
+     return tsResult.js
+             .pipe(sourcemaps.write("./")) // sourcemaps are written.
+             .pipe(gulp.dest(config.build.srcOutputDirectory + '-' + config.build.version + '/'));
 
 });
 
-gulp.task('typescript-compile',["typescript-sourcemaps"], function() {   
-       var tsResult = gulp.src(config.core.typescript) 
-                     .pipe(typescript({  
-                             noExternalResolve: true,  
-                             target: 'ES5',  
-                             declarationFiles: true, 
+gulp.task('typescript-compile',["typescript-sourcemaps"], function() {
+       var tsResult = gulp.src(config.core.typescript)
+                     .pipe(typescript({
+                             module: 'commonjs',
+                             noExternalResolve: true,
+                             target: 'ES5',
+                             declarationFiles: true,
                              typescript: require('typescript'),
-                             out: 'kurve-' + config.build.version + '.js' 
-                     })); 
-     return merge2([ 
-         tsResult.dts 
-             .pipe(concat('kurve-' + config.build.version  + config.build.declarationFilename)) 
-             .pipe(gulp.dest(config.build.outputDirectory + '-' + config.build.version + '/')), 
-         tsResult.js 
-             .pipe(gulp.dest(config.build.srcOutputDirectory + '-' + config.build.version + '/')) 
-     ]); 
- }); 
+                             out: 'kurve-' + config.build.version + '.js'
+                     }));
+     return merge2([
+         tsResult.dts
+             .pipe(concat('kurve-' + config.build.version  + config.build.declarationFilename))
+             .pipe(gulp.dest(config.build.outputDirectory + '-' + config.build.version + '/')),
+         tsResult.js
+             .pipe(gulp.dest(config.build.srcOutputDirectory + '-' + config.build.version + '/'))
+     ]);
+ });
 
 gulp.task('app-compile', ["typescript-compile"], function () {
     return gulp
         .src(['./Examples/OAuthV1/app.ts',
-			  './Examples/OAuthV2/app.ts', 
-			  './Examples/NoWindow/noLoginWindow.ts', 
-			  './dist-' + config.build.version + '/kurve-' + config.build.version + '.d.ts'], 
+			  './Examples/OAuthV2/app.ts',
+			  './Examples/NoWindow/noLoginWindow.ts',
+			  './dist-' + config.build.version + '/kurve-' + config.build.version + '.d.ts'],
 			  { base: '.' })
         .pipe(typescript({
             noExternalResolve: true,
