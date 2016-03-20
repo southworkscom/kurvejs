@@ -1,6 +1,6 @@
 ﻿// Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.
 import { Deferred, Promise, PromiseCallback } from './promises'
-import { Identity, OAuthVersion, Error } from './KurveIdentity'
+import { Identity, OAuthVersion, Error } from './identity'
 
 export module Scopes {
     class Util {

@@ -3,22 +3,21 @@
 Kurve<nolink>.JS is an unofficial, open source JavaScript / TypeScript library that aims to provide:
 
 * Easy authentication and authorization using Azure Active Directory.  With Kurve you don't have to worry about navigating away from you web app for login or token requests.  Kurve also supports Promises making it easier to handle asychronous requests.
-
 * Easy access to the Microsoft Graph REST API.  Kurve can automatically and incrementally acquire the tokens and permissions from the user required to ensure graph operations succeed.
 
 Kurve works well with most JavaScript and TypeScript frameworks including:
 
-* Angular V1<br/>
-* Angular V2<br/>
-* Ember JS<br/>
-* React<br/>
+* Angular V1
+* Angular V2
+* Ember JS
+* React
 
 Kuve enables developers building web applications - including single application pages - to support a range of authentication and authorization scenarios including:
 
-* AAD app model v1 with a postMessage flow<br/>
-* AAD app model v1 with redirections<br/>
-* AAD app model v2 with a postMessage flow<br/>
-* AAD app model v2 with Active Directoy B2C.  This makes it easy to add third party identity providers such as Facebook and signup/signin/profile edit experiences using AD B2C policies<br/>
+* AAD app model v1 with a postMessage flow
+* AAD app model v1 with redirections
+* AAD app model v2 with a postMessage flow
+* AAD app model v2 with Active Directoy B2C.  This makes it easy to add third party identity providers such as Facebook and signup/signin/profile edit experiences using AD B2C policies
 
 ## How does it work?
 
@@ -66,6 +65,26 @@ You are free to send us your feedback at this Github repo, send pull requests, e
 ### Which files do I need to run this?
 
 At minimum you need the KurveGraph.<nolink>js and Promises.<nolink>js, and optionally KurveIdentity.<nolink>js + login.html. You may use the TypeScript libraries and reuse some of the sample app code (index.html and app.<nolink>js) for reference.
+
+# Information for Developers
+
+## Usage
+
+To install the dev dependencies and typings:
+```bash
+$ npm install
+$ typings install
+```
+
+To run the tests:
+```bash
+$ npm test
+```
+
+To build the project:
+```bash
+$ npm run build
+```
 
 # Release Notes
 
