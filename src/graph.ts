@@ -1,15 +1,17 @@
 ﻿// Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.
-import { Deferred, Promise, PromiseCallback } from './promises'
-import { Identity, OAuthVersion, Error } from './identity'
+import { Deferred, Promise, PromiseCallback } from "./promises";
+import { Identity, OAuthVersion, Error } from "./identity";
 
 export module Scopes {
     class Util {
         static rootUrl = "https://graph.microsoft.com/";
     }
+
     export class General {
         public static OpenId: string = "openid";
         public static OfflineAccess: string = "offline_access";
     }
+
     export class User {
         public static Read: string = Util.rootUrl + "User.Read";
         public static ReadWrite: string = Util.rootUrl + "User.ReadWrite";
@@ -17,29 +19,35 @@ export module Scopes {
         public static ReadAll: string = Util.rootUrl + "User.Read.All";
         public static ReadWriteAll: string = Util.rootUrl + "User.ReadWrite.All";
     }
+
     export class Contacts {
         public static Read: string = Util.rootUrl + "Contacts.Read";
         public static ReadWrite: string = Util.rootUrl + "Contacts.ReadWrite";
     }
+
     export class Directory {
         public static ReadAll: string = Util.rootUrl + "Directory.Read.All";
         public static ReadWriteAll: string = Util.rootUrl + "Directory.ReadWrite.All";
         public static AccessAsUserAll: string = Util.rootUrl + "Directory.AccessAsUser.All";
     }
+
     export class Group {
         public static ReadAll: string = Util.rootUrl + "Group.Read.All";
         public static ReadWriteAll: string = Util.rootUrl + "Group.ReadWrite.All";
         public static AccessAsUserAll: string = Util.rootUrl + "Directory.AccessAsUser.All";
     }
+
     export class Mail {
         public static Read: string = Util.rootUrl + "Mail.Read";
         public static ReadWrite: string = Util.rootUrl + "Mail.ReadWrite";
         public static Send: string = Util.rootUrl + "Mail.Send";
     }
+
     export class Calendars {
         public static Read: string = Util.rootUrl + "Calendars.Read";
         public static ReadWrite: string = Util.rootUrl + "Calendars.ReadWrite";
     }
+
     export class Files {
         public static Read: string = Util.rootUrl + "Files.Read";
         public static ReadAll: string = Util.rootUrl + "Files.Read.All";
@@ -47,13 +55,16 @@ export module Scopes {
         public static ReadWriteAppFolder: string = Util.rootUrl + "Files.ReadWrite.AppFolder";
         public static ReadWriteSelected: string = Util.rootUrl + "Files.ReadWrite.Selected";
     }
+
     export class Tasks {
         public static ReadWrite: string = Util.rootUrl + "Tasks.ReadWrite";
     }
+
     export class People {
         public static Read: string = Util.rootUrl + "People.Read";
         public static ReadWrite: string = Util.rootUrl + "People.ReadWrite";
     }
+
     export class Notes {
         public static Create: string = Util.rootUrl + "Notes.Create";
         public static ReadWriteCreatedByApp: string = Util.rootUrl + "Notes.ReadWrite.CreatedByApp";
@@ -69,7 +80,7 @@ export class DataModelWrapper<T> {
     get data() { return this._data; }
 }
 
-export class DataModelListWrapper<T,S> extends DataModelWrapper<T[]>{
+export class DataModelListWrapper<T, S> extends DataModelWrapper<T[]> {
     public nextLink: NextLink<S>;
 }
 
@@ -167,10 +178,10 @@ export class User extends DataModelWrapper<UserDataModel> {
 }
 
 export interface NextLink<T> {
-    (callback? : PromiseCallback<T>): Promise<T, Error>;
+    (callback?: PromiseCallback<T>): Promise<T, Error>;
 }
 
-export class Users extends DataModelListWrapper<User, Users>{
+export class Users extends DataModelListWrapper<User, Users> {
 }
 
 export interface ItemBody {
@@ -192,7 +203,7 @@ export class MessageDataModel {
     bccRecipients: Recipient[];
     body: ItemBody;
     bodyPreview: string;
-    categories: string[]
+    categories: string[];
     ccRecipients: Recipient[];
     changeKey: string;
     conversationId: string;
@@ -209,7 +220,7 @@ export class MessageDataModel {
     lastModifiedDateTime: string;
     parentFolderId: string;
     receivedDateTime: string;
-    replyTo: Recipient[]
+    replyTo: Recipient[];
     sender: Recipient;
     sentDateTime: string;
     subject: string;
@@ -217,10 +228,10 @@ export class MessageDataModel {
     webLink: string;
 }
 
-export class Message extends DataModelWrapper<MessageDataModel>{
+export class Message extends DataModelWrapper<MessageDataModel> {
 }
 
-export class Messages extends DataModelListWrapper<Message, Messages>{
+export class Messages extends DataModelListWrapper<Message, Messages> {
 }
 
 export interface Attendee {
@@ -238,7 +249,7 @@ export interface PatternedRecurrence { }
 
 export interface ResponseStatus {
     response: string;
-    time: string
+    time: string;
 }
 
 export interface Location {
@@ -281,10 +292,10 @@ export class EventDataModel {
     webLink: string;
 }
 
-export class Event extends DataModelWrapper<EventDataModel>{
+export class Event extends DataModelWrapper<EventDataModel> {
 }
 
-export class Events extends DataModelListWrapper<Event, Events>{
+export class Events extends DataModelListWrapper<Event, Events> {
     constructor(protected graph: Graph, protected endpoint: EventsEndpoint, protected _data: Event[]) {
         super(graph, _data);
     }
@@ -309,10 +320,10 @@ export class GroupDataModel {
     public visibility: string;
 }
 
-export class Group extends DataModelWrapper<GroupDataModel>{
+export class Group extends DataModelWrapper<GroupDataModel> {
 }
 
-export class Groups extends DataModelListWrapper<Group, Groups>{
+export class Groups extends DataModelListWrapper<Group, Groups> {
 }
 
 export class MailFolderDataModel {
@@ -323,10 +334,10 @@ export class MailFolderDataModel {
     public totalItemCount: number;
 }
 
-export class MailFolder extends DataModelWrapper<MailFolderDataModel>{
+export class MailFolder extends DataModelWrapper<MailFolderDataModel> {
 }
 
-export class MailFolders extends DataModelListWrapper<MailFolder, MailFolders>{
+export class MailFolders extends DataModelListWrapper<MailFolder, MailFolders> {
 }
 
 export enum AttachmentType {
@@ -349,9 +360,9 @@ export class AttachmentDataModel {
     public contentType: string;
 }
 
-export class Attachment extends DataModelWrapper<AttachmentDataModel>{
-    public getType() : AttachmentType {
-        switch (this._data['@odata.type']) {
+export class Attachment extends DataModelWrapper<AttachmentDataModel> {
+    public getType(): AttachmentType {
+        switch (this._data["@odata.type"]) {
             case "#microsoft.graph.fileAttachment":
                 return AttachmentType.fileAttachment;
             case "#microsoft.graph.itemAttachment":
@@ -362,7 +373,7 @@ export class Attachment extends DataModelWrapper<AttachmentDataModel>{
     }
 }
 
-export class Attachments extends DataModelListWrapper<Attachment, Attachments>{
+export class Attachments extends DataModelListWrapper<Attachment, Attachments> {
 }
 
 export class Graph {
@@ -382,7 +393,7 @@ export class Graph {
         }
     }
 
-    //Only adds scopes when linked to a v2 Oauth of kurve identity
+    // Only adds scopes when linked to a v2 Oauth of kurve identity
     private scopesForV2(scopes: string[]): string[] {
         if (!this.KurveIdentity)
             return null;
@@ -391,9 +402,9 @@ export class Graph {
         else return scopes;
     }
 
-    //Users
+    // Users
     public meAsync(odataQuery?: string): Promise<User, Error> {
-        var d = new Deferred<User,Error>();
+        var d = new Deferred<User, Error>();
         this.me((user, error) => error ? d.reject(error) : d.resolve(user), odataQuery);
         return d.promise;
     }
@@ -405,7 +416,7 @@ export class Graph {
     }
 
     public userAsync(userId: string, odataQuery?: string, basicProfileOnly = true): Promise<User, Error> {
-        var d = new Deferred<User,Error>();
+        var d = new Deferred<User, Error>();
         this.user(userId, (user, error) => error ? d.reject(error) : d.resolve(user), odataQuery, basicProfileOnly);
         return d.promise;
     }
@@ -417,7 +428,7 @@ export class Graph {
     }
 
     public usersAsync(odataQuery?: string, basicProfileOnly = true): Promise<Users, Error> {
-        var d = new Deferred<Users,Error>();
+        var d = new Deferred<Users, Error>();
         this.users((users, error) => error ? d.reject(error) : d.resolve(users), odataQuery, basicProfileOnly);
         return d.promise;
     }
@@ -428,9 +439,9 @@ export class Graph {
         this.getUsers(urlString, callback, this.scopesForV2(scopes), basicProfileOnly);
     }
 
-    //Groups
-    public groupAsync(groupId: string, odataQuery?: string): Promise<Group,Error> {
-        var d = new Deferred<Group,Error>();
+    // Groups
+    public groupAsync(groupId: string, odataQuery?: string): Promise<Group, Error> {
+        var d = new Deferred<Group, Error>();
         this.group(groupId, (group, error) => error ? d.reject(error) : d.resolve(group), odataQuery);
         return d.promise;
     }
@@ -567,7 +578,7 @@ export class Graph {
     }
 
     public messageAttachmentForUserAsync(userPrincipalName: string, messageId: string, attachmentId: string, odataQuery?: string): Promise<Attachment, Error> {
-        var d = new Deferred<Attachment,Error>();
+        var d = new Deferred<Attachment, Error>();
         this.messageAttachmentForUser(userPrincipalName, messageId, attachmentId, (attachment, error) => error ? d.reject(error) : d.resolve(attachment), odataQuery);
         return d.promise;
     }
@@ -578,14 +589,14 @@ export class Graph {
         this.getMessageAttachment(urlString, callback, this.scopesForV2(scopes));
     }
 
-    //http verbs
+    // http verbs
     public getAsync(url: string): Promise<string, Error> {
-        var d = new Deferred<string,Error>();
-        this.get(url, (response, error) => error ? d.reject(error) : d.resolve(response))
+        var d = new Deferred<string, Error>();
+        this.get(url, (response, error) => error ? d.reject(error) : d.resolve(response));
         return d.promise;
     }
 
-    public get(url: string, callback: PromiseCallback<string>, responseType?: string, scopes?:string[]): void {
+    public get(url: string, callback: PromiseCallback<string>, responseType?: string, scopes?: string[]): void {
         var xhr = new XMLHttpRequest();
         if (responseType)
             xhr.responseType = responseType;
@@ -595,7 +606,7 @@ export class Graph {
                     callback(responseType ? xhr.response : xhr.responseText, null);
                 else
                     callback(null, this.generateError(xhr));
-        }
+        };
 
         xhr.open("GET", url);
         this.addAccessTokenAndSend(xhr, (addTokenError: Error) => {
@@ -609,15 +620,14 @@ export class Graph {
         var response = new Error();
         response.status = xhr.status;
         response.statusText = xhr.statusText;
-        if (xhr.responseType === '' || xhr.responseType === 'text')
+        if (xhr.responseType === "" || xhr.responseType === "text")
             response.text = xhr.responseText;
         else
             response.other = xhr.response;
         return response;
-
     }
 
-    //Private methods
+    // Private methods
 
     private getUsers(urlString, callback: PromiseCallback<Users>, scopes?: string[], basicProfileOnly = true): void {
         this.get(urlString, (result: string, errorGet: Error) => {
@@ -636,11 +646,11 @@ export class Graph {
 
             var resultsArray = (usersODATA.value ? usersODATA.value : [usersODATA]) as any[];
             var users = new Users(this, resultsArray.map(o => new User(this, o)));
-            var nextLink = usersODATA['@odata.nextLink'];
+            var nextLink = usersODATA["@odata.nextLink"];
             if (nextLink) {
                 users.nextLink = (callback?: PromiseCallback<Users>) => {
                     var scopes = basicProfileOnly ? [Scopes.User.ReadBasicAll] : [Scopes.User.ReadAll];
-                    var d = new Deferred<Users,Error>();
+                    var d = new Deferred<Users, Error>();
                     this.getUsers(nextLink, (result: Users, error: Error) => {
                         if (callback)
                             callback(result, error);
@@ -648,14 +658,14 @@ export class Graph {
                             error ? d.reject(error) : d.resolve(result);
                     }, this.scopesForV2(scopes), basicProfileOnly);
                     return d.promise;
-                }
+                };
             }
 
             callback(users, null);
-        },null,scopes);
+        }, null, scopes);
     }
 
-    private getUser(urlString, callback: PromiseCallback<User>, scopes?:string[]): void {
+    private getUser(urlString, callback: PromiseCallback<User>, scopes?: string[]): void {
         this.get(urlString, (result: string, errorGet: Error) => {
             if (errorGet) {
                 callback(null, errorGet);
@@ -671,38 +681,37 @@ export class Graph {
 
             var user = new User(this, userODATA);
             callback(user, null);
-        },null,scopes);
-
+        }, null, scopes);
     }
 
-    private addAccessTokenAndSend(xhr: XMLHttpRequest, callback: (error: Error) => void, scopes?:string[]): void {
+    private addAccessTokenAndSend(xhr: XMLHttpRequest, callback: (error: Error) => void, scopes?: string[]): void {
         if (this.accessToken) {
-            //Using default access token
-            xhr.setRequestHeader('Authorization', 'Bearer ' + this.accessToken);
+            // Using default access token
+            xhr.setRequestHeader("Authorization", "Bearer " + this.accessToken);
             xhr.send();
         } else {
-            //Using the integrated Identity object
+            // Using the integrated Identity object
 
             if (scopes) {
-                //v2 scope based tokens
-                this.KurveIdentity.getAccessTokenForScopes(scopes,false, ((token: string, error: Error) => {
-                    if (error)
+                // v2 scope based tokens
+                this.KurveIdentity.getAccessTokenForScopes(scopes, false, ((token: string, error: Error) => {
+                    if (error) {
                         callback(error);
+                    }
                     else {
-                        xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+                        xhr.setRequestHeader("Authorization", "Bearer " + token);
                         xhr.send();
                         callback(null);
                     }
                 }));
-
             }
             else {
-                //v1 resource based tokens
+                // v1 resource based tokens
                 this.KurveIdentity.getAccessToken(this.defaultResourceID, ((token: string, error: Error) => {
                     if (error)
                         callback(error);
                     else {
-                        xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+                        xhr.setRequestHeader("Authorization", "Bearer " + token);
                         xhr.send();
                         callback(null);
                     }
@@ -711,7 +720,7 @@ export class Graph {
         }
     }
 
-    private getMessages(urlString: string, callback: PromiseCallback<Messages>, scopes?:string[]): void {
+    private getMessages(urlString: string, callback: PromiseCallback<Messages>, scopes?: string[]): void {
         this.get(urlString, (result: string, errorGet: Error) => {
             if (errorGet) {
                 callback(null, errorGet);
@@ -728,11 +737,11 @@ export class Graph {
 
             var resultsArray = (messagesODATA.value ? messagesODATA.value : [messagesODATA]) as any[];
             var messages = new Messages(this, resultsArray.map(o => new Message(this, o)));
-            var nextLink = messagesODATA['@odata.nextLink'];
+            var nextLink = messagesODATA["@odata.nextLink"];
             if (nextLink) {
                 messages.nextLink = (callback?: PromiseCallback<Messages>) => {
                     var scopes = [Scopes.Mail.Read];
-                    var d = new Deferred<Messages,Error>();
+                    var d = new Deferred<Messages, Error>();
                     this.getMessages(nextLink, (messages: Messages, error: Error) => {
                         if (callback)
                             callback(messages, error);
@@ -740,10 +749,10 @@ export class Graph {
                             error ? d.reject(error) : d.resolve(messages);
                     }, this.scopesForV2(scopes));
                     return d.promise;
-                }
+                };
             }
-            callback(messages,  null);
-        },null,scopes);
+            callback(messages, null);
+        }, null, scopes);
     }
 
     private getEvents(urlString: string, endpoint: EventsEndpoint, callback: PromiseCallback<Events>, scopes?: string[]): void {
@@ -763,7 +772,7 @@ export class Graph {
 
             var resultsArray = (odata.value ? odata.value : [odata]) as any[];
             var events = new Events(this, endpoint, resultsArray.map(o => new Event(this, o)));
-            var nextLink = odata['@odata.nextLink'];
+            var nextLink = odata["@odata.nextLink"];
             if (nextLink) {
                 events.nextLink = (callback?: PromiseCallback<Events>) => {
                     var scopes = [Scopes.Mail.Read];
@@ -775,14 +784,13 @@ export class Graph {
                             error ? d.reject(error) : d.resolve(result);
                     }, this.scopesForV2(scopes));
                     return d.promise;
-                }
+                };
             }
             callback(events, null);
         }, null, scopes);
     }
 
-
-    private getGroups(urlString: string, callback: PromiseCallback<Groups>, scopes?:string[]): void {
+    private getGroups(urlString: string, callback: PromiseCallback<Groups>, scopes?: string[]): void {
         this.get(urlString, (result: string, errorGet: Error) => {
             if (errorGet) {
                 callback(null, errorGet);
@@ -799,11 +807,11 @@ export class Graph {
 
             var resultsArray = (groupsODATA.value ? groupsODATA.value : [groupsODATA]) as any[];
             var groups = new Groups(this, resultsArray.map(o => new Group(this, o)));
-            var nextLink = groupsODATA['@odata.nextLink'];
+            var nextLink = groupsODATA["@odata.nextLink"];
             if (nextLink) {
                 groups.nextLink = (callback: PromiseCallback<Groups>) => {
                     var scopes = [Scopes.Group.ReadAll];
-                    var d = new Deferred<Groups,Error>();
+                    var d = new Deferred<Groups, Error>();
                     this.getGroups(nextLink, (result: Groups, error: Error) => {
                         if (callback)
                             callback(result, error);
@@ -811,14 +819,14 @@ export class Graph {
                             error ? d.reject(error) : d.resolve(result);
                     }, this.scopesForV2(scopes));
                     return d.promise;
-                }
+                };
             }
 
             callback(groups, null);
-        },null,scopes);
+        }, null, scopes);
     }
 
-    private getGroup(urlString, callback: PromiseCallback<Group>, scopes?:string[]): void {
+    private getGroup(urlString, callback: PromiseCallback<Group>, scopes?: string[]): void {
         this.get(urlString, (result: string, errorGet: Error) => {
             if (errorGet) {
                 callback(null, errorGet);
@@ -834,11 +842,11 @@ export class Graph {
             var group = new Group(this, ODATA);
 
             callback(group, null);
-        },null,scopes);
+        }, null, scopes);
 
     }
 
-    private getPhoto(urlString, callback: PromiseCallback<ProfilePhoto>, scopes?:string[]): void {
+    private getPhoto(urlString, callback: PromiseCallback<ProfilePhoto>, scopes?: string[]): void {
         this.get(urlString, (result: string, errorGet: Error) => {
             if (errorGet) {
                 callback(null, errorGet);
@@ -854,17 +862,17 @@ export class Graph {
             var photo = new ProfilePhoto(this, ODATA);
 
             callback(photo, null);
-        },null,scopes);
+        }, null, scopes);
     }
 
-    private getPhotoValue(urlString, callback: PromiseCallback<any>, scopes?:string[]): void {
+    private getPhotoValue(urlString, callback: PromiseCallback<any>, scopes?: string[]): void {
         this.get(urlString, (result: any, errorGet: Error) => {
             if (errorGet) {
                 callback(null, errorGet);
                 return;
             }
             callback(result, null);
-        }, "blob",scopes);
+        }, "blob", scopes);
     }
 
     private getMailFolders(urlString, callback: PromiseCallback<MailFolders>, scopes?: string[]): void {
@@ -881,13 +889,13 @@ export class Graph {
                 callback(null, errorODATA);
             }
 
-            var resultsArray:MailFolderDataModel[] = (odata.value ? odata.value : [odata]);
+            var resultsArray: MailFolderDataModel[] = (odata.value ? odata.value : [odata]);
             var mailFolders = new MailFolders(this, resultsArray.map(o => new MailFolder(this, o)));
-            var nextLink = odata['@odata.nextLink'];
+            var nextLink = odata["@odata.nextLink"];
             if (nextLink) {
                 mailFolders.nextLink = (callback?: PromiseCallback<MailFolders>) => {
                     var scopes = [Scopes.User.ReadAll];
-                    var d = new Deferred<MailFolders,Error>();
+                    var d = new Deferred<MailFolders, Error>();
                     this.getMailFolders(nextLink, (result: MailFolders, error: Error) => {
                         if (callback)
                             callback(result, error);
@@ -895,14 +903,13 @@ export class Graph {
                             error ? d.reject(error) : d.resolve(result);
                     }, this.scopesForV2(scopes));
                     return d.promise;
-                }
+                };
             }
             callback(mailFolders, null);
-        },null,scopes);
+        }, null, scopes);
     }
 
-
-    private getMessageAttachments(urlString: string, callback: PromiseCallback<Attachments>, scopes?:string[]): void {
+    private getMessageAttachments(urlString: string, callback: PromiseCallback<Attachments>, scopes?: string[]): void {
         this.get(urlString, (result: string, errorGet: Error) => {
             if (errorGet) {
                 callback(null, errorGet);
@@ -918,11 +925,11 @@ export class Graph {
             }
             var resultsArray = (attachmentsODATA.value ? attachmentsODATA.value : [attachmentsODATA]) as any[];
             var attachments = new Attachments(this, resultsArray.map(o => new Attachment(this, o)));
-            var nextLink = attachmentsODATA['@odata.nextLink'];
+            var nextLink = attachmentsODATA["@odata.nextLink"];
             if (nextLink) {
                 attachments.nextLink = (callback?: PromiseCallback<Attachments>) => {
                     var scopes = [Scopes.Mail.Read];
-                    var d = new Deferred<Attachments,Error>();
+                    var d = new Deferred<Attachments, Error>();
                     this.getMessageAttachments(nextLink, (attachments: Attachments, error: Error) => {
                         if (callback)
                             callback(attachments, error);
@@ -930,14 +937,14 @@ export class Graph {
                             error ? d.reject(error) : d.resolve(attachments);
                     }, this.scopesForV2(scopes));
                     return d.promise;
-                }
+                };
             }
 
             callback(attachments,  null);
-        },null,scopes);
+        }, null, scopes);
     }
 
-    private getMessageAttachment(urlString, callback: PromiseCallback<Attachment>, scopes?:string[]): void {
+    private getMessageAttachment(urlString, callback: PromiseCallback<Attachment>, scopes?: string[]): void {
         this.get(urlString, (result: string, errorGet: Error) => {
             if (errorGet) {
                 callback(null, errorGet);
@@ -953,10 +960,10 @@ export class Graph {
             var attachment = new Attachment(this, ODATA);
 
             callback(attachment, null);
-        },null,scopes);
+        }, null, scopes);
     }
 
-    private buildUrl(root:string, path: string, odataQuery?: string) {
+    private buildUrl(root: string, path: string, odataQuery?: string) {
         return this.baseUrl + root + path + (odataQuery ? "?" + odataQuery : "");
     }
     private buildMeUrl(path: string = "", odataQuery?: string) {
@@ -970,12 +977,12 @@ export class Graph {
     }
 }
 
-//*********************************************************
+// *********************************************************
 //
-//Kurve js, https://github.com/microsoftdx/kurvejs
+// Kurve js, https://github.com/microsoftdx/kurvejs
 //
-//Copyright (c) Microsoft Corporation
-//All rights reserved.
+// Copyright (c) Microsoft Corporation
+// All rights reserved.
 //
 // MIT License:
 // Permission is hereby granted, free of charge, to any person obtaining
@@ -1003,4 +1010,4 @@ export class Graph {
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
-//*********************************************************
+// *********************************************************

@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.
-import { Promise, PromiseCallback, Deferred } from './promises'
+import { Promise, PromiseCallback, Deferred } from "./promises";
 
 export enum OAuthVersion {
-    v1=1,
-    v2=2
+    v1 = 1,
+    v2 = 2
 }
 
 export class Error {
@@ -159,7 +159,7 @@ export class Identity {
 
         this.tokenCache = new TokenCache(identitySettings.tokenStorage);
 
-        //Callback handler from other windows
+        // Callback handler from other windows
         window.addEventListener("message", event => {
             if (event.data.type === "id_token") {
                 if (event.data.error) {
@@ -185,7 +185,7 @@ export class Identity {
                     this.getTokenCallback(null, e);
 
                 } else {
-                    var token:string = event.data.token;
+                    var token: string = event.data.token;
                     var iframe = document.getElementById("tokenIFrame");
                     iframe.parentNode.removeChild(iframe);
 
@@ -206,8 +206,8 @@ export class Identity {
         function token(s: string) {
             var start = window.location.href.indexOf(s);
             if (start < 0) return null;
-            var end = window.location.href.indexOf("&",start + s.length);
-            return  window.location.href.substring(start,((end > 0) ? end : window.location.href.length));
+            var end = window.location.href.indexOf("&", start + s.length);
+            return  window.location.href.substring(start, ((end > 0) ? end : window.location.href.length));
         }
 
         function parseQueryString(str: string) {
@@ -233,7 +233,7 @@ export class Identity {
         var idToken = token("#id_token=");
         var accessToken = token("#access_token");
         if (idToken) {
-            if (true || this.state === params["state"][0]) { //BUG? When you are in a pure redirect system you don't remember your state or nonce so don't check.
+            if (true || this.state === params["state"][0]) { // BUG? When you are in a pure redirect system you don't remember your state or nonce so don't check.
                 this.decodeIdToken(idToken);
                 this.loginCallback && this.loginCallback(null);
             } else {
@@ -244,7 +244,7 @@ export class Identity {
             return true;
         }
         else if (accessToken) {
-            throw "Should not get here.  This should be handled via the iframe approach."
+            throw "Should not get here. This should be handled via the iframe approach.";
 /*
             if (this.state === params["state"][0]) {
                 this.getTokenCallback && this.getTokenCallback(accessToken, null);
@@ -281,7 +281,7 @@ export class Identity {
         }), expiration);
     }
 
-    private decodeAccessToken(accessToken: string, resource?:string, scopes?:string[]): void {
+    private decodeAccessToken(accessToken: string, resource?: string, scopes?: string[]): void {
         var decodedToken = this.base64Decode(accessToken.substring(accessToken.indexOf('.') + 1, accessToken.lastIndexOf('.')));
         var decodedTokenJSON = JSON.parse(decodedToken);
         var expiryDate = new Date(new Date('01/01/1970 0:0 UTC').getTime() + parseInt(decodedTokenJSON.exp) * 1000);
@@ -308,9 +308,9 @@ export class Identity {
         return this.version;
     }
 
-    public getAccessTokenAsync(resource: string): Promise<string,Error> {
+    public getAccessTokenAsync(resource: string): Promise<string, Error> {
 
-        var d = new Deferred<string,Error>();
+        var d = new Deferred<string, Error>();
         this.getAccessToken(resource, ((token, error) => {
             if (error) {
                 d.reject(error);
@@ -334,9 +334,9 @@ export class Identity {
             return callback(token.token, null);
         }
 
-        //If we got this far, we need to go get this token
+        // If we got this far, we need to go get this token
 
-        //Need to create the iFrame to invoke the acquire token
+        // Need to create the iFrame to invoke the acquire token
         this.getTokenCallback = ((token: string, error: Error) => {
             if (error) {
                 callback(null, error);
@@ -379,7 +379,7 @@ export class Identity {
         return d.promise;
     }
 
-    public getAccessTokenForScopes(scopes: string[], promptForConsent=false, callback: (token: string, error: Error) => void): void {
+    public getAccessTokenForScopes(scopes: string[], promptForConsent = false, callback: (token: string, error: Error) => void): void {
         if (this.version !== OAuthVersion.v2) {
             var e = new Error();
             e.statusText = "Dynamic scopes require v2 mode. Currently this identity class is using v1";
@@ -400,7 +400,7 @@ export class Identity {
             if (error) {
                 if (promptForConsent || !error.text) {
                     callback(null, error);
-                } else if (error.text.indexOf("AADSTS65001")>=0) {
+                } else if (error.text.indexOf("AADSTS65001") >= 0) {
                     //We will need to try getting the consent
                     this.getAccessTokenForScopes(scopes, true, this.getTokenCallback);
                 } else {
@@ -442,7 +442,7 @@ export class Identity {
         }
     }
 
-    public loginAsync(loginSettings?: { scopes?: string[], policy?:string, tenant?:string}): Promise<void, Error> {
+    public loginAsync(loginSettings?: { scopes?: string[], policy?: string, tenant?: string}): Promise<void, Error> {
         var d = new Deferred<void, Error>();
         this.login((error) => {
             if (error) {
@@ -513,7 +513,7 @@ export class Identity {
 
     public loginNoWindow(callback: (error: Error) => void, toUrl? : string): void {
         this.loginCallback = callback;
-        this.state = "clientId=" + this.clientId + "&" + "tokenProcessorUrl=" + this.tokenProcessorUrl
+        this.state = "clientId=" + this.clientId + "&" + "tokenProcessorUrl=" + this.tokenProcessorUrl;
         this.nonce = this.generateNonce();
 
         var redirected = this.checkForIdentityRedirect();
@@ -559,12 +559,12 @@ export class Identity {
     }
 }
 
-//*********************************************************
+// *********************************************************
 //
-//Kurve js, https://github.com/microsoftdx/kurvejs
+// Kurve js, https://github.com/microsoftdx/kurvejs
 //
-//Copyright (c) Microsoft Corporation
-//All rights reserved.
+// Copyright (c) Microsoft Corporation
+// All rights reserved.
 //
 // MIT License:
 // Permission is hereby granted, free of charge, to any person obtaining
@@ -592,4 +592,4 @@ export class Identity {
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
-//*********************************************************
+// *********************************************************

@@ -1,7 +1,7 @@
 ﻿// Adapted from the original source: https://github.com/DirtyHairy/typescript-deferred
 // Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.
 
-import { Error } from './identity'
+import { Error } from "./identity";
 
 function DispatchDeferred(closure: () => void) {
     setTimeout(closure, 0);
@@ -66,7 +66,7 @@ class Client {
 }
 
 export class Deferred<T, E>  {
-    private _dispatcher: (closure: () => void)=> void;
+    private _dispatcher: (closure: () => void) => void;
 
     constructor();
     constructor(dispatcher: (closure: () => void) => void);
@@ -232,10 +232,10 @@ export class Promise<T, E> implements Promise<T, E> {
 
 //*********************************************************
 //
-//Kurve js, https://github.com/microsoftdx/kurvejs
+// Kurve js, https://github.com/microsoftdx/kurvejs
 //
-//Copyright (c) Microsoft Corporation
-//All rights reserved.
+// Copyright (c) Microsoft Corporation
+// All rights reserved.
 //
 // MIT License:
 // Permission is hereby granted, free of charge, to any person obtaining
@@ -263,4 +263,4 @@ export class Promise<T, E> implements Promise<T, E> {
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
-//*********************************************************
+// *********************************************************
