@@ -3,22 +3,27 @@ import { expect } from 'chai';
 import { mock } from 'sinon';
 import { Graph } from '../src/KurveGraph';
 
-describe('Graph', () => {
+describe("Graph", () => {
 
-    describe('meAsync', () => {
+    describe("meAsync", () => {
 
-        it('should get /me url', () => {
+        it("should get /me url", (done) => {
             var graph = new Graph({
-                defaultAccessToken: 'access_token'
+                defaultAccessToken: "access_token"
             });
 
-            var mockedGet = mock(graph)
-                .expects('get')
-                .withArgs('https://graph.microsoft.com/v1.0/me/')
+            var mockedGet = mock(graph);
 
-            graph.meAsync().then(() => {
+            mockedGet.expects("get")
+                .withArgs("https://graph.microsoft.com/v1.0/me/")
+                .yields(JSON.stringify({ displayName: "John" }), null);
+
+            graph.meAsync().then((user) => {
+                expect(user.data.displayName).to.be.equal("Johns");
                 mockedGet.verify();
+                done();
             });
         });
     });
 });
+
