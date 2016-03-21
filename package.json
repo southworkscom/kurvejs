@@ -17,10 +17,12 @@
     "ts-loader": "0.8.1",
     "ts-node": "0.7.0",
     "tsify": "0.14.1",
+    "tslint": "3.6.0",
     "typescript": "1.8.9",
     "webpack": "1.12.14"
   },
   "scripts": {
+    "lint": "tslint -c ./tslint.json src/**/*.ts",
     "test": "mocha --require ts-node/register test/**/*.ts",
     "build:cleanup": "rm -rf ./dist ",
     "build:dts": "./node_modules/dts-generator/bin/dts-generator --name kurve --project ./ --out dist/kurve.d.ts",
