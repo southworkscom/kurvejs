@@ -1,8 +1,14 @@
 {
-  "name": "kurvejs",
+  "name": "kurve-js",
   "version": "0.4.1",
   "description": "Kurve JS library",
   "license": "MIT",
+  "main": "./dist/kurve.js",
+  "typings": "./dist/kurve.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MicrosoftDX/kurvejs"
+  },
   "devDependencies": {
     "chai": "3.5.0",
     "dts-generator": "1.7.0",
@@ -16,11 +22,11 @@
   },
   "scripts": {
     "test": "mocha --require ts-node/register test/**/*.ts",
-    "build-cleanup": "rm -rf ./dist ",
-    "build-dts": "./node_modules/dts-generator/bin/dts-generator --name kurve --project ./ --out dist/kurve.d.ts",
-    "build-bundle": "webpack",
-    "build-minified-bundle": "MINIFIED=true webpack",
-    "build-copy-index": "cp ./login.html ./dist/login.html",
-    "build": "npm run build-cleanup && npm run build-dts  && npm run build-bundle && npm run build-minified-bundle && npm run build-copy-index"
+    "build:cleanup": "rm -rf ./dist ",
+    "build:dts": "./node_modules/dts-generator/bin/dts-generator --name kurve --project ./ --out dist/kurve.d.ts",
+    "build:bundle": "webpack",
+    "build:bundle-min": "MINIFIED=true webpack",
+    "build:copy-index": "cp ./login.html ./dist/login.html",
+    "build": "npm run build:cleanup && npm run build:dts  && npm run build:bundle && npm run build:bundle-min && npm run build:copy-index"
   }
 }
